@@ -1,0 +1,76 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    Layout = "../_SiteLayout.cshtml";
+    Page.Title = "DataUri";
+
+    IEnumerable<dynamic> databaseImages;
+    using (var database = Database.Open("Delay.Web.Helpers.Sample.Database"))
+    {
+        databaseImages = database.Query("SELECT * FROM Images");
+    }
+
+    var directoryInfo = new DirectoryInfo(Path.GetDirectoryName(Server.MapPath(VirtualPath)));
+    var serverImages = Enumerable.Concat(directoryInfo.EnumerateFiles("*.jpg"), directoryInfo.EnumerateFiles("*.png"));
+
+    var sampleScriptPath = Path.Combine(directoryInfo.FullName, "Sample-Script.js");
+}
+
+@section SubTitle {
+    Class that creates <a href="http://en.wikipedia.org/wiki/Data_Uri">"data" URIs</a> for embedding linked content inside a web page.
+}
+
+
+<p class="Emphasized">
+    Images in the database:
+</p>
+
+@{
+    foreach(var image in databaseImages)
+    {
+        <p>
+            <img src="@DataUri.Write(image.Content, image.MediaType)" alt="@image.Name"
+                 width="@image.Width" height="@image.Height" style="vertical-align:middle"/>
+            @image.Name
+        </p>
+    }
+}
+
+<form method="post" enctype="multipart/form-data" action="@Href("UploadImage")">
+    <p>
+        <input type="submit" value="Add the selected image:"/>
+        <input type="file" name="upload"/>
+    </p>
+</form>
+
+<p>&nbsp;</p>
+
+
+<p class="Emphasized">
+    Images on the server:
+</p>
+
+@{
+    foreach(var image in serverImages)
+    {
+        <p>
+            <img src="@DataUri.Write(image.FullName)" alt="@image.Name" style="vertical-align:middle"/> 
+            @image.Name
+        </p>
+    }
+}
+
+<p>&nbsp;</p>
+
+
+<p class="Emphasized">
+    Script from the server:
+</p>
+
+<script src="@DataUri.Write(sampleScriptPath)" type="text/javascript"></script>
+<script src="@DataUri.Write(sampleScriptPath, "text/javascript")" type="text/javascript"></script>
+<script src="@DataUri.Write(File.ReadAllBytes(sampleScriptPath), "text/javascript")" type="text/javascript"></script>
+<script src="@DataUri.Write(File.ReadAllBytes(sampleScriptPath).ToList(), "text/javascript")" type="text/javascript"></script>
+<script src="@DataUri.Write(File.OpenRead(sampleScriptPath), "text/javascript")" type="text/javascript"></script>
+
+@* Note: Best practice is for the caller (this page) to close/dispose the Stream returned by OpenRead in the last example above. *@

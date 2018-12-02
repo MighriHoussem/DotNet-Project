@@ -1,0 +1,329 @@
+﻿@using TekMarket.Models
+@using TekMarket.Controllers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Super Market Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
+    <title>@ViewBag.Title</title>
+
+
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <link href="@Url.Content("~/Content/clientAssets/css/bootstrap.css")" rel="stylesheet" type="text/css" media="all" />
+    <link href="@Url.Content("~/Content/clientAssets/css/style.css")" rel="stylesheet" type="text/css" media="all" />
+    <!-- font-awesome icons -->
+    <link href="@Url.Content("~/Content/clientAssets/css/font-awesome.css")" rel="stylesheet">
+   <link href="@Url.Content("~/Content/BotSection.css")" rel="stylesheet" />
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script src="@Url.Content("~/Content/clientAssets/js/jquery-1.11.1.min.js")"></script>
+    <!-- //js -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="@Url.Content("~/Content/clientAssets/js/move-top.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/clientAssets/js/easing.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div class="agileits_header">
+        <div class="container">
+            <div class="w3l_offers">
+                <p><a href="@Url.Action("Products","Product")">SHOP NOW</a></p>
+            </div>
+            <div class="agile-login">
+                <ul>
+                    @if (Session["prenom"] != null)
+                    {
+                        <li>
+                            <a href="#">
+                                Hello @Session["prenom"] !
+                            </a>
+                        </li>
+                        <li><a href="#">@Html.ActionLink("Log Out", "Logout", "Home")</a></li>
+                        <li><a href="contact.html">@Html.ActionLink("Ask for help?", "Contact", "Home")</a></li>
+                        <li><a href="#">@Html.ActionLink("Checkout", "Checkout", "Home")</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#">@Html.ActionLink("Create Account", "Create", "Clients") </a></li>
+                        <li><a href="#">@Html.ActionLink("Login", "Login", "Home")</a></li>
+                        <li><a href="contact.html">@Html.ActionLink("Ask for help?", "Contact", "Home")</a></li>}
+                    <!-- <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">En<b class="caret"></b></a>
+        <ul class="dropdown-menu multi-column columns-3">
+            <div class="row">
+                <div class="multi-gd-img">
+                   <ul class="multi-column-dropdown">
+                        <ul>
+                            <li>
+                                <img src="@Url.Content("~/Content/clientAssets/images/france.png")" alt=""><a href="#">Fr</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li><img src="@Url.Content("~/Content/clientAssets/images/arab.png")" alt=""><a href="#">Ar</a></li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+    </li> -->
+                </ul>
+            </div>
+            <div class="product_list_header">
+                <form action="#" method="post" class="last">
+                    <input type="hidden" name="cmd" value="_cart">
+                    <input type="hidden" name="display" value="1">
+                    <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+
+
+    <div class="logo_products">
+        <div class="container">
+            <div class="w3ls_logo_products_left1">
+                <ul class="phone_email">
+                    <li><i class="fa fa-phone" aria-hidden="true"></i>Order online or call us : (+216) 22 883 478</li>
+
+                </ul>
+            </div>
+            <div class="w3ls_logo_products_left">
+                <h1><a href="@Url.Action("Index","Home")">TekMarket</a></h1>
+            </div>
+            <div class="w3l_search">
+               
+                <form action="@Url.Action("Search", "Product")" method="post">
+                    <input type="search" name="Search" placeholder="Search for a Product..." required="">
+                    @if(Session["Search"]!=null) {
+                        string search = Request.Form["Search"];
+                    }
+                    <button type="submit" class="btn btn-default search" aria-label="Left Align">
+                        <i class="fa fa-search" aria-hidden="true"> </i>
+                    </button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+    <div class="navigation-agileits">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header nav_2">
+                    <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <center>
+                    <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                        <ul class="nav navbar-nav">
+                            <li><a href="@Url.Action("Index","Home")" class="act">Home</a></li>
+
+                            @{
+                                DBModel db = new DBModel();
+                                List<Categorie> la = db.Categories.ToList();
+                            }
+                            @foreach (Categorie m in la)
+                            {
+                                <li>  <a href="@Url.Action("SearchCategorie", "Product",new { id=m.id } )" class="act">@m.description</a></li>
+                            }
+                            <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
+                        </ul>
+                    </div>
+                </center>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Page body -->
+    @RenderBody()
+   
+
+    <button class="open-button" onclick="openForm()">Judi</button>
+    <div class="chat-popup" id="myForm">
+
+        <div class="form-container">
+            <h2>Judi</h2>
+            <label for="msg"><b>Hello sir, how can I help you?</b></label>
+            <div id="conv">
+            </div>
+
+            <textarea placeholder="Ask judi a question..." name="msg" id="msg"></textarea>
+            <button class="btn" id="btnsend" onclick="Chat()">Send</button>
+            <button class="btn cancel" onclick="closeForm()">Close</button>
+
+        </div>
+    </div>
+    <script>
+        /*$("#btnsend").click(function () {
+            alert("Hello");
+        });*/
+        function show() {
+            document.getElementById('conv').innerHTML += "<p>bot: hello</p><br>";
+        }
+    </script>
+    <div id="div1"></div>
+    <script>
+           function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+
+            function Chat() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById('conv').innerHTML += this.responseText;
+
+                    }
+                };
+                var msg = document.getElementById('msg').value;
+                document.getElementById('conv').innerHTML += "<p>you: "+msg+" </p><br>";
+                var link = '@Url.Action("Chatting", "Home", new { ms= "var" })';
+                link = link.replace('var', msg);
+                xmlhttp.open("POST", link, true);
+                xmlhttp.send();
+            }
+    </script>
+    <!-- //footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="w3_footer_grids">
+                <div class="col-md-3 w3_footer_grid">
+                    <h3>Contact</h3>
+                    <ul class="address">
+                        <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>Avenue ibn khaldoun,4022,<span>Sousse .</span></li>
+                        <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com">commercial@tekmarket.com</a></li>
+                        <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>(+216) 22 883 478</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 w3_footer_grid">
+                    <h3>Information</h3>
+                    <ul class="info">
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="#">About Us</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Contact","Home")">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 w3_footer_grid">
+                    <h3>Category</h3>
+                    <ul class="info">
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Computer</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Cellphone</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Electronics</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Accessories</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Network & Security</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 w3_footer_grid">
+                    <h3>Profile</h3>
+                    <ul class="info">
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Products","Product")">Store</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="#">My Cart</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Login","Home")">Login</a></li>
+                        <li><i class="fa fa-arrow-right" aria-hidden="true"></i><a href="@Url.Action("Register","Home")">Create Account</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <div class="container">
+            </div>
+        </div>
+    </div>
+    <div class="footer-botm">
+        <div class="container">
+            <div class="w3layouts-foot">
+                <ul>
+                    <li><a href="#" class="w3_agile_facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="agile_twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="w3_agile_dribble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class="w3_agile_vimeo"><i class="fa fa-vimeo" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+            <div class="payment-w3ls">
+                <img src="@Url.Content("~/Content/clientAssets/images/card.png")" alt=" " class="img-responsive">
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //footer -->
+    <!-- main slider-banner -->
+
+
+    <script src="@Url.Content("~/Content/clientAssets/js/skdslider.min.js")"></script>
+    <script src="@Url.Content("~/Content/clientAssets/js/minicart.min.js")"></script>
+    <script src="@Url.Content("~/Content/clientAssets/js/bootstrap.min.js")"></script>
+    <link href="@Url.Content("~/Content/clientAssets/css/skdslider.css")" rel="stylesheet">
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#demo1').skdslider({ 'delay': 5000, 'animationSpeed': 2000, 'showNextPrev': true, 'showPlayButton': true, 'autoSlide': true, 'animationType': 'fading' });
+
+            jQuery('#responsive').change(function () {
+                $('#responsive_wrapper').width(jQuery(this).val());
+            });
+
+        });
+    </script>
+    <!-- //main slider-banner -->
+    <!-- Bootstrap Core JavaScript -->
+    <!-- top-header and slider -->
+    <!-- here stars scrolling icon -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <!-- //here ends scrolling icon -->
+    <script>
+        // Mini Cart
+        paypal.minicart.render({
+            action: '#'
+        });
+
+        if (~window.location.search.indexOf('reset=true')) {
+            paypal.minicart.reset();
+        }
+    </script>
+</body>
+</html>

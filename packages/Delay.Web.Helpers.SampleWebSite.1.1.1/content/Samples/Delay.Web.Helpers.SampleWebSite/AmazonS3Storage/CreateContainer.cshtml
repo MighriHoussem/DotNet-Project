@@ -1,0 +1,7 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    var container = Request["Container"];
+    AmazonS3Storage.CreateBlobContainer(container);
+    Response.Redirect(Href("Default", new { Bucket = container }));
+}

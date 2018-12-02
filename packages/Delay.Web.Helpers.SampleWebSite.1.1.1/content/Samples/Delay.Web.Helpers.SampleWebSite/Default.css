@@ -1,0 +1,34 @@
+﻿body
+{
+    font-family:Sans-Serif;
+    font-size:10pt;
+    background-color:#e0e0f0;
+}
+
+.Title
+{
+    font-size:16pt;
+    font-weight:bold;
+}
+
+.SubTitle
+{
+    font-style:italic;
+}
+
+.Emphasized
+{
+    font-size:12pt;
+    font-weight:bold;
+}
+
+.Subdued
+{
+    font-size:7pt;
+}
+
+.Footer
+{
+    font-size:8pt;
+    font-style:italic;
+}

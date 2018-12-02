@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Delay.Web.Helpers</name>
+    </assembly>
+    <members>
+        <member name="T:Delay.Web.Helpers.AmazonS3Storage">
+            <summary>
+            Class that provides list/get/set/delete access to Amazon S3 blobs.
+            </summary>
+            <remarks>
+            API based on WindowsAzureStorage from Microsoft.Web.Helpers.WindowsAzureStorage.dll.
+            </remarks>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.ListBlobContainers">
+            <summary>
+            Lists the blob containers for an account.
+            </summary>
+            <returns>List of container names.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.CreateBlobContainer(System.String)">
+            <summary>
+            Creates a blob container.
+            </summary>
+            <param name="containerName">Container name.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DeleteBlobContainer(System.String)">
+            <summary>
+            Deletes an empty blob container.
+            </summary>
+            <param name="containerName">Container name.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.ListBlobs(System.String)">
+            <summary>
+            Lists the blobs in a bucket.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <returns>List of blob addresses.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DeleteBlob(System.String)">
+            <summary>
+            Deletes a blob.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DeleteBlob(System.String,System.String)">
+            <summary>
+            Deletes a blob.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.IO.Stream)">
+            <summary>
+            Creates (or updates) the contents of a blob from a Stream.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="stream">Stream with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Creates (or updates) the contents of a blob from a Stream.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="stream">Stream with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsStream(System.String,System.IO.Stream)">
+            <summary>
+            Fetches the contents of a blob into a Stream.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="stream">Stream for blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsStream(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Fetches the contents of a blob into a Stream.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="stream">Stream for blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.Byte[])">
+            <summary>
+            Creates (or updates) the contents of a blob from a byte array.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="content">Byte array with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.String,System.Byte[])">
+            <summary>
+            Creates (or updates) the contents of a blob from a byte array.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="content">Byte array with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsByteArray(System.String)">
+            <summary>
+            Fetches the contents of a blob into a byte array.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <returns>Byte array with blob content.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsByteArray(System.String,System.String)">
+            <summary>
+            Fetches the contents of a blob into a byte array.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <returns>Byte array with blob content.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.String)">
+            <summary>
+            Creates (or updates) the contents of a blob from a file.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="fileName">File name with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadBinaryToBlob(System.String,System.String,System.String)">
+            <summary>
+            Creates (or updates) the contents of a blob from a file.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="fileName">File name with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobToFile(System.String,System.String)">
+            <summary>
+            Fetches the contents of a blob into a file.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="fileName">File for blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobToFile(System.String,System.String,System.String)">
+            <summary>
+            Fetches the contents of a blob into a file.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="fileName">File for blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadTextToBlob(System.String,System.String)">
+            <summary>
+            Creates (or updates) the (UTF8-encoded) contents of a blob from a string.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <param name="content">String with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.UploadTextToBlob(System.String,System.String,System.String)">
+            <summary>
+            Creates (or updates) the (UTF8-encoded) contents of a blob from a string.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <param name="content">String with blob content.</param>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsText(System.String)">
+            <summary>
+            Fetches the (UTF8-encoded) contents of a blob into a string.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <returns>String with blob content.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.DownloadBlobAsText(System.String,System.String)">
+            <summary>
+            Fetches the (UTF8-encoded) contents of a blob into a string.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <param name="blobName">Blob name.</param>
+            <returns>String with blob content.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.GetClient(System.String)">
+            <summary>
+            Gets a S3BlobStoreClient instance for a specified bucket name.
+            </summary>
+            <param name="bucketName">Bucket name.</param>
+            <returns>S3BlobStoreClient instance.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.GetBucketAndName(System.String)">
+            <summary>
+            Gets a BucketAndName instance for the specified blob address.
+            </summary>
+            <param name="blobAddress">Blob address.</param>
+            <returns>BucketAndName instance.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.GetBucketAddress(System.String,System.String)">
+            <summary>
+            Gets a bucket address for the specified bucket and name.
+            </summary>
+            <param name="bucket">Containing bucket.</param>
+            <param name="name">Blob name.</param>
+            <returns>Blob address.</returns>
+        </member>
+        <member name="P:Delay.Web.Helpers.AmazonS3Storage.AccessKeyId">
+            <summary>
+            Gets or sets the Access Key ID for the account.
+            </summary>
+        </member>
+        <member name="P:Delay.Web.Helpers.AmazonS3Storage.SecretAccessKey">
+            <summary>
+            Gets or sets the Secret Access Key for the account.
+            </summary>
+        </member>
+        <member name="T:Delay.Web.Helpers.AmazonS3Storage.BucketAndName">
+            <summary>
+            Class that represents a blob address (bucket and name).
+            </summary>
+        </member>
+        <member name="M:Delay.Web.Helpers.AmazonS3Storage.BucketAndName.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the BucketAndName class.
+            </summary>
+            <param name="bucket">Blob bucket.</param>
+            <param name="name">Blob name.</param>
+        </member>
+        <member name="P:Delay.Web.Helpers.AmazonS3Storage.BucketAndName.Bucket">
+            <summary>
+            Gets the bucket.
+            </summary>
+        </member>
+        <member name="P:Delay.Web.Helpers.AmazonS3Storage.BucketAndName.Name">
+            <summary>
+            Gets the name.
+            </summary>
+        </member>
+        <member name="T:Delay.Web.Helpers.DataUri">
+            <summary>
+            Class that creates "data" URIs for embedding linked content inside a web page.
+            </summary>
+            <remarks>
+            See also:
+            http://en.wikipedia.org/wiki/Data_Uri
+            http://tools.ietf.org/html/rfc2397
+            </remarks>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.Write(System.String)">
+            <summary>
+            Writes a data URI for the specified file (inferring media type from the file extension).
+            </summary>
+            <param name="fileName">File to create a data URI for.</param>
+            <returns>Data URI.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.Write(System.String,System.String)">
+            <summary>
+            Writes a data URI for the specified file and media type.
+            </summary>
+            <param name="fileName">File to create a data URI for.</param>
+            <param name="mediaType">Media type for the data URI.</param>
+            <returns>Data URI.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.Write(System.IO.Stream,System.String)">
+            <summary>
+            Writes a data URI for the specified Stream and media type.
+            </summary>
+            <param name="data">Stream to create a data URI for.</param>
+            <param name="mediaType">Media type for the data URI.</param>
+            <returns>Data URI.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.Write(System.Collections.Generic.IEnumerable{System.Byte},System.String)">
+            <summary>
+            Writes a data URI for the specified sequence of bytes and media type.
+            </summary>
+            <param name="data">Sequence of bytes to create a data URI for.</param>
+            <param name="mediaType">Media type for the data URI.</param>
+            <returns>Data URI.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.Write(System.Byte[],System.String)">
+            <summary>
+            Writes a data URI for the specified array of bytes and media type.
+            </summary>
+            <param name="data">Array of bytes to create a data URI for.</param>
+            <param name="mediaType">Media type for the data URI.</param>
+            <returns>Data URI.</returns>
+        </member>
+        <member name="M:Delay.Web.Helpers.DataUri.ConvertStreamToSequence(System.IO.Stream)">
+            <summary>
+            Converts the specified Stream to a sequence of bytes.
+            </summary>
+            <param name="stream">Stream to convert.</param>
+            <returns>Sequence of bytes.</returns>
+        </member>
+    </members>
+</doc>

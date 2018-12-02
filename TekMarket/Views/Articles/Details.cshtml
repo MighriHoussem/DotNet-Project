@@ -1,0 +1,77 @@
+﻿@model TekMarket.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Product Details</h2>
+
+<div>
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Category", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categorie.libelle)
+        </dd>
+
+        <dt>
+            @Html.Label("Label", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libelle)
+        </dd>
+
+        <dt>
+            @Html.Label("Description", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.Label("Price", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prix)
+        </dd>
+
+      
+
+        <dt>
+            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qtedisponible)
+        </dd>
+
+        <dt>
+            @Html.Label("Colors", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.couleurdispo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+
+    <div>
+        @Html.ActionLink("Upload Product Image", "uploadImage")
+    </div>
+    <br/>
+
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.refarticle }) |
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

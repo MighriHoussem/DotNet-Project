@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TekMarket.Models.Commande>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Client Email", htmlAttributes: new { @class = "control-label" })
+        </th>
+        <th>
+            @Html.Label("Order Date", htmlAttributes: new { @class = "control-label" })
+        </th>
+        <th>
+            @Html.Label("Order Amount", htmlAttributes: new { @class = "control-label" })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.datecom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalprix)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.refcomm }) |
+            @Html.ActionLink("Details", "Details", new { id=item.refcomm }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.refcomm })
+        </td>
+    </tr>
+}
+
+</table>

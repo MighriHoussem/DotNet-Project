@@ -1,0 +1,6 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    AmazonS3Storage.DeleteBlob(Request["BlobAddress"]);
+    Response.Redirect(Href("."));
+}

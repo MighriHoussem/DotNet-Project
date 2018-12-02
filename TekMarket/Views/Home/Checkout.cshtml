@@ -1,0 +1,78 @@
+﻿@using TekMarket.Models
+@model dynamic
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+            <li class="active">Checkout Page</li>
+        </ol>
+    </div>
+</div>
+<!-- //breadcrumbs -->
+<!---728x90--->
+<!-- checkout -->
+<div class="checkout">
+    <div class="container">
+
+        <div class="checkout-right">
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Product</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <!-- <th>Remove</th> -->
+                   </tr>
+               </thead>
+               @{int i = 1; float montanttotal = 0;}
+               @foreach (var m in Model.listepanier)
+               {
+                   String imgurl = "~/UploadedImage/" + m.refarticle + ".jpg";
+
+
+                   <tr class="rem1">
+                       <td class="invert">@i</td>
+                       <td class="invert"><a href="@Url.Action("Single", "Product", new { refarticle = m.refarticle })"><img src=@Url.Content(imgurl) alt=" " width="50px" height="50px" /></a></td>
+
+                       <td class="invert">@m.refarticle</td>
+                       <td class="invert">@m.qte</td>
+                       @{float montant = m.montant * m.qte;
+                           montanttotal += montant;}
+                       <td class="invert">@montant</td>
+                       <td action=@Url.Action("Login", "Home") class="invert">
+                           <!-- <div class="rem">
+        <a href="@Url.Action("RemovePanier","Home", new { refarticle = m.refarticle })" class="close1"> Delete </a>
+    </div>-->
+                        </td>
+                    </tr>
+                    i++;
+                }
+                @{i--;}
+                <h2>Your shopping cart contains: <span>@i Products</span></h2>
+
+
+            </table>
+            <h2> Montant à payer : @montanttotal </h2>
+        </div>
+        <!---728x90--->
+        <div class="checkout-left">
+            <div class="checkout-left-basket">
+                <br />
+                <br />
+                <a href=@Url.Action("CheckoutSuc","Home")>Order Now</a>
+
+            </div>
+            <div class="checkout-right-basket">
+                <a href=@Url.Action("Products","Product")><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continue Shopping</a>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

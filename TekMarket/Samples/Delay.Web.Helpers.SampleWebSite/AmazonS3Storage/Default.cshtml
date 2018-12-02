@@ -1,0 +1,118 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    Layout = "../_SiteLayout.cshtml";
+    Page.Title = "AmazonS3Storage";
+    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+    // Get credentials from request - with fall-back to cookie
+    var requestCookie = Request.Cookies["State"] ?? new HttpCookie("State");
+    var accessKeyId = Request["AccessKeyId"] ?? requestCookie["AccessKeyId"];
+    var secretAccessKey = Request["SecretAccessKey"] ?? requestCookie["SecretAccessKey"];
+    var bucket = Request["Bucket"] ?? requestCookie["Bucket"];
+
+    // Create temporary cookie to store credentials
+    // NOTE: This is a sample; don't store credentials in cookies in real life!
+    var cookie = new HttpCookie("State");
+    cookie["AccessKeyId"] = accessKeyId;
+    cookie["SecretAccessKey"] = secretAccessKey;
+    cookie["Bucket"] = bucket;
+    Response.Cookies.Add(cookie);
+
+    // Set credentials (if provided)
+    AmazonS3Storage.AccessKeyId = accessKeyId;
+    AmazonS3Storage.SecretAccessKey = secretAccessKey;
+    var configured = !string.IsNullOrEmpty(accessKeyId) && !string.IsNullOrEmpty(secretAccessKey);
+}
+
+@section SubTitle {
+    Class that provides list/get/set/delete access to <a href="http://aws.amazon.com/s3/">Amazon S3</a> blobs.
+}
+
+<form method="post" action="">
+    <table>
+        <tr>
+            <td>Access Key ID:</td>
+            <td><input type="password" name="AccessKeyId" value="@accessKeyId" size="30"/></td>
+        </tr>
+        <tr>
+            <td>Secret Access Key:</td>
+            <td><input type="password" name="SecretAccessKey" value="@secretAccessKey" size="30"/></td>
+        </tr>
+    </table>
+    <p>
+        <input type="submit" value="Refresh"/>
+    </p>
+</form>
+
+<p>&nbsp;</p>
+
+@try {
+    if (configured) {
+        var containers = AmazonS3Storage.ListBlobContainers();
+
+        <p class="Emphasized">
+            Buckets:
+        </p>
+
+        if (containers.Any()) {
+            foreach (var container in containers) {
+                <p>
+                    <a href="@Href("Default", new { Bucket = container })">@container</a>
+                    -
+                    <a href="@Href("DeleteContainer", new { Container = container })" class="Subdued">[Delete]</a>
+                </p>
+            }
+        } else {
+            <em>[No buckets]</em>
+        }
+        <form method="post" action="@Href("CreateContainer")">
+            <input type="submit" value="Create bucket:"/>
+            <input type="text" name="Container" size="30"/>
+        </form>
+
+        <p>&nbsp;</p>
+
+        if (!string.IsNullOrEmpty(bucket)) {
+            <p class="Emphasized">
+                Contents of bucket <strong>@bucket</strong>:
+            </p>
+
+            var blobs = AmazonS3Storage.ListBlobs(bucket);
+            if (blobs.Any()) {
+                foreach (var blobAddress in blobs) {
+                <p>
+                    <a href="@Href("DownloadBlob", new { BlobAddress = blobAddress })">@blobAddress.Split('/').Last()</a>
+                    -
+                    <a href="@Href("DeleteBlob", new { BlobAddress = blobAddress })" class="Subdued">[Delete]</a>
+                </p>
+                }
+            }
+            else {
+                <em>[Empty]</em>
+            }
+            <p>&nbsp;</p>
+
+            <form method="post" enctype="multipart/form-data" action="@Href("UploadBlob", new { Bucket = bucket })">
+                @if (configured) {
+                    <p>
+                        <input type="submit" value="Upload the selected file:"/>
+                        <input type="file" name="upload"/>
+                    </p>
+
+                    <p>&nbsp;</p>
+                }
+            </form>
+        }
+    }
+    else {
+        <p>
+            <strong>[Please provide valid Amazon S3 account credentials in order to use this sample.]</strong>
+        </p>
+    }
+}
+catch {
+    <p>
+        <strong>[Invalid credentials, invalid bucket name, or web service error.]</strong>
+    </p>
+}

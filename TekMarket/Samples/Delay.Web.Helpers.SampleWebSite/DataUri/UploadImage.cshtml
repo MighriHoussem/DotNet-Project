@@ -1,0 +1,14 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    using (var database = Database.Open("Delay.Web.Helpers.Sample.Database"))
+    {
+        var webImage = WebImage.GetImageFromRequest("upload");
+        if (null != webImage)
+        {
+            database.Execute("INSERT INTO Images (Name, Content, Width, Height, MediaType) VALUES (@0, @1, @2, @3, @4)",
+                Path.GetFileName(webImage.FileName), webImage.GetBytes(), webImage.Width, webImage.Height, "image/" + webImage.ImageFormat);
+        }
+        Response.Redirect(Href("."));
+    }
+}

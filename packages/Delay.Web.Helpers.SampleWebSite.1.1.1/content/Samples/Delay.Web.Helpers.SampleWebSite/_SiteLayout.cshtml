@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Sample web site for Delay.Web.Helpers web helper's @Page.Title area."/>
+        <title>Delay.Web.Helpers - @Page.Title</title>
+        <link href="@Href(VirtualPathUtility.Combine(VirtualPathUtility.GetDirectory(VirtualPath), "Default.css"))" rel="stylesheet"/>
+    </head>
+    <body>
+        <h1 class="Title">
+            <a href="@Href(VirtualPathUtility.GetDirectory(VirtualPath))">Delay.Web.Helpers</a> - @Page.Title
+        </h1>
+        <p class="SubTitle">
+            @RenderSection("SubTitle", required:false)
+        </p>
+        <p>&nbsp;</p>
+
+        @RenderBody()
+
+        <p>&nbsp;</p>
+        <p class="Footer">
+            For more information, please visit <a href="http://blogs.msdn.com/b/delay/">Delay's Blog</a>.
+        </p>
+    </body>
+</html>

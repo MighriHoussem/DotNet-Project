@@ -1,0 +1,51 @@
+﻿@model TekMarket.Models.Qtecommande
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Qtecommande</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Article.libelle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Article.libelle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commande.refcomm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commande.refcomm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.qte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalprix)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalprix)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

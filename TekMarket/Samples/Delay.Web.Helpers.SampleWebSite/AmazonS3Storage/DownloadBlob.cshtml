@@ -1,0 +1,11 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    var blobAddress = Request["BlobAddress"];
+    var bytes = AmazonS3Storage.DownloadBlobAsByteArray(blobAddress);
+    Response.ClearContent();
+    Response.AppendHeader("Content-Type", "application/octet-stream");
+    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlPathEncode(blobAddress.Split('/').Last()));
+    Response.BinaryWrite(bytes);
+    Response.End();
+}

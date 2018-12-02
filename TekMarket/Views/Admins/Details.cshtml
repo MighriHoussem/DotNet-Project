@@ -1,0 +1,68 @@
+﻿@model TekMarket.Models.Admin
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Administrator Details</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            
+            @Html.Label("Email",htmlAttributes:new {@class="control-label"})
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+           @Html.Label("Password",htmlAttributes:new { @class="control-label"})
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pwd)
+        </dd>
+
+        <dt>
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt>
+            @Html.Label("SubName", htmlAttributes: new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prenom)
+        </dd>
+
+        <dt>
+            @Html.Label("Identity Card",htmlAttributes:new { @class="control-label"})
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cin)
+        </dd>
+
+        <dt>
+            @Html.Label("Function",htmlAttributes:new { @class="control-label"})
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fonction)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

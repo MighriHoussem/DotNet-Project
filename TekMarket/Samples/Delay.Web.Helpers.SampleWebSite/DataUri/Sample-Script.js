@@ -1,0 +1,1 @@
+﻿document.writeln('<p>This text comes from an inlined JavaScript (.js) file.</p>');

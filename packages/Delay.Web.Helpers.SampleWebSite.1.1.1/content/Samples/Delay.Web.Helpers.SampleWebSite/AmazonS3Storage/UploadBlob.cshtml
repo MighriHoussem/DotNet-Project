@@ -1,0 +1,11 @@
+﻿@using Delay.Web.Helpers
+
+@{
+    var bucket = Request["Bucket"];
+    for (var i = 0 ; i < Request.Files.Count ; i++)
+    {
+        var httpPostedFile = Request.Files[i];
+        AmazonS3Storage.UploadBinaryToBlob(bucket, httpPostedFile.FileName, httpPostedFile.InputStream);
+    }
+    Response.Redirect(Href("."));
+}
