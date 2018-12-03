@@ -66,8 +66,10 @@
             <div class="checkout-left-basket">
                 <br />
                 <br />
-                <a href=@Url.Action("CheckoutSuc","Home")>Order Now</a>
-
+                @if (montanttotal != 0)
+                {
+                <a href=@Url.Action("CheckoutSuc", "Home")>Order Now</a>
+                }
             </div>
             <div class="checkout-right-basket">
                 <a href=@Url.Action("Products","Product")><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continue Shopping</a>

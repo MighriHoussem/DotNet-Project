@@ -58,39 +58,42 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li><a href="#">@Html.ActionLink("Log Out", "Logout", "Home")</a></li>
                         <li><a href="contact.html">@Html.ActionLink("Ask for help?", "Contact", "Home")</a></li>
                         <li><a href="#">@Html.ActionLink("Checkout", "Checkout", "Home")</a></li>
+
                     }
                     else
                     {
                         <li><a href="#">@Html.ActionLink("Create Account", "Create", "Clients") </a></li>
                         <li><a href="#">@Html.ActionLink("Login", "Login", "Home")</a></li>
-                        <li><a href="contact.html">@Html.ActionLink("Ask for help?", "Contact", "Home")</a></li>}
+                        <li><a href="contact.html">@Html.ActionLink("Ask for help?", "Contact", "Home")</a></li>
+
+                        <div class="product_list_header">
+                            <form action="#" method="post" class="last">
+                                <input type="hidden" name="cmd" value="_cart">
+                                <input type="hidden" name="display" value="1">
+                                <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    }
                     <!-- <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">En<b class="caret"></b></a>
-        <ul class="dropdown-menu multi-column columns-3">
-            <div class="row">
-                <div class="multi-gd-img">
-                   <ul class="multi-column-dropdown">
-                        <ul>
-                            <li>
-                                <img src="@Url.Content("~/Content/clientAssets/images/france.png")" alt=""><a href="#">Fr</a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li><img src="@Url.Content("~/Content/clientAssets/images/arab.png")" alt=""><a href="#">Ar</a></li>
-                        </ul>
-                    </ul>
-                </div>
-            </div>
-        </ul>
-    </li> -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">En<b class="caret"></b></a>
+                <ul class="dropdown-menu multi-column columns-3">
+                    <div class="row">
+                        <div class="multi-gd-img">
+                           <ul class="multi-column-dropdown">
+                                <ul>
+                                    <li>
+                                        <img src="@Url.Content("~/Content/clientAssets/images/france.png")" alt=""><a href="#">Fr</a>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li><img src="@Url.Content("~/Content/clientAssets/images/arab.png")" alt=""><a href="#">Ar</a></li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
                 </ul>
-            </div>
-            <div class="product_list_header">
-                <form action="#" method="post" class="last">
-                    <input type="hidden" name="cmd" value="_cart">
-                    <input type="hidden" name="display" value="1">
-                    <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-                </form>
+            </li> -->
+                </ul>
             </div>
             <div class="clearfix"> </div>
         </div>

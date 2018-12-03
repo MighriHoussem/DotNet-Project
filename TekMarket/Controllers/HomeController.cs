@@ -222,23 +222,26 @@ namespace TekMarket.Controllers
                               select m;
             List<Qtepanier> qqq = qtepanierre.ToList();
             Commande commande = new Commande();
-            Qtecommande qtecommande = new Qtecommande();
-            String refcom;
-            int k = 1;
-            /*  for (int i= 0; i < qqq.Count(); i++)
-              {     qtecommande.refarticle = qqq.ElementAt(i).refarticle;
-                  qtecommande.qte = qqq.ElementAt(i).qte;
-                  qtecommande.totalprix = qqq.ElementAt(i).montant;
-                  commande.idutilisateur = idutilisateur;
-                  commande.datecom = System.DateTime.Today;
-                  refcom = k.ToString();
-                  //commande.refcomm = refcom;
-                  qtecommande.Commande = commande;
-
-                  db.Qtecommandes.Add(qtecommande);
-                  db.SaveChanges();
-                  k++; 
-              }*/
+             //Qtecommande qtecommande = new Qtecommande();
+             String refcom;
+             var k = db.Commandes.ToList().Count+1;
+             refcom = k.ToString();
+             commande.refcomm = refcom;
+             commande.idutilisateur = idutilisateur;
+             commande.datecom = System.DateTime.Today;
+            commande.totalprix = 0;
+            for (int i = 0; i < qqq.Count(); i++)
+            {
+                commande.totalprix += qqq.ElementAt(i).montant * qqq.ElementAt(i).qte;
+            }
+            db.Commandes.Add(commande);
+             db.SaveChanges();
+             
+            for (int i = 0; i < qqq.Count(); i++)
+            {
+                db.Qtepaniers.Remove(qqq.ElementAt(i));
+                db.SaveChanges();
+            }
             return View();
         }
 
