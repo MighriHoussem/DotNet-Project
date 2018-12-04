@@ -1552,3 +1552,7 @@ C:\Users\hamma\Downloads\Desktop\ProjetDotNet\application\DotNet-Project\TekMark
 C:\Users\hamma\Downloads\Desktop\ProjetDotNet\application\DotNet-Project\TekMarket\obj\Debug\TekMarket.csproj.CopyComplete
 C:\Users\hamma\Downloads\Desktop\ProjetDotNet\application\DotNet-Project\TekMarket\obj\Debug\TekMarket.dll
 C:\Users\hamma\Downloads\Desktop\ProjetDotNet\application\DotNet-Project\TekMarket\obj\Debug\TekMarket.pdb
+C:\Users\Hou\Desktop\DotNet-Project\TekMarket\bin\Jint.dll
+C:\Users\Hou\Desktop\DotNet-Project\TekMarket\bin\Syn.Oryzer.dll
+C:\Users\Hou\Desktop\DotNet-Project\TekMarket\bin\Syn.Utilities.dll
+C:\Users\Hou\Desktop\DotNet-Project\TekMarket\bin\Syn.VA.dll

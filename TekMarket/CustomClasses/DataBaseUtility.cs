@@ -102,7 +102,7 @@ namespace TekMarket.CustomClasses
         
         public String ProductByCategory(String category)
         {
-            var selectString = $"SELECT a.refarticle ref, a.libelle lib, a.description des, a.prix pr, c.description descat FROM Article a, Categorie c WHERE a.idcategorie=c.id and c.description = '{category}';";
+            var selectString = $"SELECT a.refarticle ref, a.libelle lib, a.description des, a.prix pr, c.description descat FROM Article a, Categorie c WHERE a.idcategorie=c.id and c.description like '%{category}%';";
             sqlCmd.CommandText = selectString;
             sqlCmd.Connection = conn;
             reader = sqlCmd.ExecuteReader();

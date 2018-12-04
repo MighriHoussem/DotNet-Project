@@ -31,6 +31,7 @@ namespace TekMarket.Models
 
 
         [Required]
+  
         public float? prix { get; set; }
 
         [Column(TypeName = "text")]
