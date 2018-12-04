@@ -202,6 +202,22 @@ namespace TekMarket.CustomClasses
             return result;
         }
 
+        public SqlDataReader caByUser()
+        {
+            sqlCmd.CommandText = "SELECT c.id, c.nom nom, sum(cm.totalprix) pr FROM Client c, Commande cm WHERE c.id=cm.idutilisateur GROUP BY c.id, c.nom";
+            sqlCmd.Connection = conn;
+            reader = sqlCmd.ExecuteReader();
+            return reader;
+        }
+
+        public SqlDataReader nbprodByCat()
+        {
+            sqlCmd.CommandText = "SELECT c.id id, count(a.refarticle) nb FROM Article a, categorie c WHERE a.idcategorie=c.id GROUP BY c.id";
+            sqlCmd.Connection = conn;
+            reader = sqlCmd.ExecuteReader();
+            return reader;
+        }
+
 
     }
 }
