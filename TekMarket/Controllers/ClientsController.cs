@@ -53,7 +53,7 @@ namespace TekMarket.Controllers
             {
                 db.Clients.Add(client);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return Redirect("/Home");
             }
 
             return View(client);

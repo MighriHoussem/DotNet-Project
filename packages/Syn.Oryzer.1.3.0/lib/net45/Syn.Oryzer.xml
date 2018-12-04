@@ -1,0 +1,1655 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Syn.Oryzer</name>
+    </assembly>
+    <members>
+        <member name="T:Syn.Oryzer.Convolution.Layers.MaxoutLayer">
+            <summary>
+                Implements Maxout nnonlinearity that computes
+                x -> max(x)
+                where x is a vector of size group_size. Ideally of course,
+                the input size should be exactly divisible by group_size
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Layers.RegressionLayer">
+            <summary>
+                implements an L2 regression cost layer,
+                so penalizes \sum_i(||x_i - y_i||^2), where x is its input
+                and y is the user-provided array of "correct" values.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Layers.ReluLayer">
+            <summary>
+                Implements ReLU nonlinearity elementwise
+                x -> max(0, x)
+                the output is in [0, inf)
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Layers.SigmoidLayer">
+            <summary>
+                Implements Sigmoid nnonlinearity elementwise
+                x -> 1/(1+e^(-x))
+                so the output is between 0 and 1.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Layers.SoftmaxLayer">
+            <summary>
+                This is a classifier, with N discrete classes from 0 to N-1
+                it gets a stream of N incoming numbers and computes the softmax
+                function (exponentiate and normalize to sum to 1 as probabilities should)
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Training.SgdTrainer">
+            <summary>
+                Stochastic gradient descent
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Convolution.Volume">
+            <summary>
+                Volume is the basic building block of all data in a net.
+                it is essentially just a 3D volume of numbers, with a
+                width, height, and depth.
+                it is used to hold data for all filters, all volumes,
+                all weights, and also stores all gradients w.r.t.
+                the data.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Convolution.Volume.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+                Volume will be filled with random numbers
+            </summary>
+            <param name="width">width</param>
+            <param name="height">height</param>
+            <param name="depth">depth</param>
+        </member>
+        <member name="M:Syn.Oryzer.Convolution.Volume.#ctor(System.Int32,System.Int32,System.Int32,System.Double)">
+            <summary>
+            </summary>
+            <param name="width">width</param>
+            <param name="height">height</param>
+            <param name="depth">depth</param>
+            <param name="c">value to initialize the volume with</param>
+        </member>
+        <member name="M:Syn.Oryzer.Convolution.VolumeUtilities.Augment(Syn.Oryzer.Convolution.Volume,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+                Intended for use with data augmentation
+            </summary>
+            <param name="volume">Input volume</param>
+            <param name="crop">Size of output</param>
+            <param name="dx">Offset wrt incoming volume, of the shift</param>
+            <param name="dy">Offset wrt incoming volume, of the shift</param>
+            <param name="flipLeftRight">flip left/right</param>
+            <returns></returns>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Input">
+            <summary>
+            Gets or sets the training file path.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Output">
+            <summary>
+            Gets or sets the output file path.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.LearningRate">
+            <summary>
+            Gets or sets the learning rate.
+            </summary>
+            <remarks>Default is <c>0.05</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.LearningRateUpdateRate">
+            <summary>
+            Gets or sets rate of updates for the learning rate.
+            </summary>
+            <remarks>Default is <c>100</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Dimension">
+            <summary>
+            Gets or sets the size of word vectors.
+            </summary>
+            <remarks>Default is <c>100</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.WindowSize">
+            <summary>
+            Gets or sets the size of the Context Window.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Epoch">
+            <summary>
+            Gets or sets the number of epochs.
+            </summary>
+            <remarks>Default is <c>5</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.MinCount">
+            <summary>
+            Gets or sets the minimal number of word occurrences.
+            </summary>
+            <remarks>Default is <c>5</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.MinCountLabel">
+            <summary>
+            Gets or sets the minimal number of label occurrences.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Negatives">
+            <summary>
+            Gets or sets the number of negative samples.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.WordNgrams">
+            <summary>
+            Gets or sets the maximum length of word ngram
+            </summary>
+            <remarks>Default is <c>1</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Loss">
+            <summary>
+            Gets or sets the loss function.
+            </summary>
+            <remarks>Default is <see cref="F:Syn.Oryzer.LanguageProcessing.FastText.LossType.NegativeSampling"/></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Bucket">
+            <summary>
+            Gets or sets the number of buckets.
+            </summary>
+            <remarks>Default is <c>2000000</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.MinNgram">
+            <summary>
+            Gets or sets minimum length of char ngram.
+            </summary>
+            <remarks>Default is <c>3</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.MaxNgram">
+            <summary>
+            Gets or sets maximum length of char ngram.
+            </summary>
+            <remarks>Default is <c>6</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Thread">
+            <summary>
+            Gets or sets the number of threads.
+            </summary>
+            <remarks>Default is <c>12</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Threshold">
+            <summary>
+            Gets or sets the sampling threshold.
+            </summary>
+            <remarks>Default is <c>0.0001</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Label">
+            <summary>
+            Gets or sets the labels prefix.
+            </summary>
+            <remarks>Default is <c>__label__</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Verbose">
+            <summary>
+            Gets or sets the verbosity level.
+            </summary>
+            <remarks>Default is <c>2</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.PretrainedVectors">
+            <summary>
+            Gets or sets pretrained word vectors for supervised learning.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.SaveOutput">
+            <summary>
+            Gets or sets a value indicating whether output parameters should be saved.
+            </summary>
+            <remarks>Default is <c>0</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Retrain">
+            <summary>
+            Gets or sets a value indicating if embeddings should be finetuned if a cutoff is applied.
+            </summary>
+            <remarks>Default is <c>0</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.Cutoff">
+            <summary>
+            Gets or sets the number of words and ngrams to retrain.
+            </summary>
+            <remarks>Default is <c>0</c></remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.FastText.Args.SubDimension">
+            <summary>
+            Gets or sets the size of each sub-vector.
+            </summary>
+            <remarks>Default is <c>2</c></remarks>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.FastText.Args.Save(System.String)">
+            <summary>
+            Saves the Arguments to the file path specified.
+            </summary>
+            <param name="fileName">File path.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.FastText.Args.Load(System.String)">
+            <summary>
+            Loads Arguments from the specified file path.
+            </summary>
+            <param name="fileName">File path.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.FastText.Dictionary.Save(System.String)">
+            <summary>
+            Saves the dictionary to the specified file.
+            </summary>
+            <param name="fileName">File path.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.FastText.Dictionary.Load(System.String)">
+            <summary>
+            Loads the dictionary from the specified file.
+            </summary>
+            <param name="fileName">File path.</param>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.VectorComparison.Similarity">
+            <summary>
+            Gets the cosine similarity.
+            </summary>
+            <value>
+            The cosine similarity.
+            </value>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.VectorVocabulary">
+            <summary>
+            Represents word vector vocabulary.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:Syn.Oryzer.LanguageProcessing.VectorVocabulary"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.VectorVocabulary.IsLoaded">
+            <summary>
+            Gets a value indicating if Word Vectors have been loaded via <c>Load()</c> method.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Logger">
+            <summary>
+            Gets the logger.
+            </summary>
+            <value>
+            The logger.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Count">
+            <summary>
+            Gets the number of added Word vectors.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Dimension">
+            <summary>
+            Gets the word vector dimension.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Load(System.String,Syn.Oryzer.LanguageProcessing.VectorDataFormat)">
+            <summary>
+            Loads word vectors from the textual file path specified.
+            </summary>
+            <param name="filePath">File path.</param>
+            <param name="format">Format of vector data.</param>
+            <remarks>Loads "Word2Vec" or "FastText" Word Vector representations from the specified file.</remarks>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Save(System.String,Syn.Oryzer.LanguageProcessing.VectorDataFormat)">
+            <summary>
+            Saves present word vectors to the file path specified.
+            </summary>
+            <param name="filePath">File path.</param>
+            <param name="format">Format of vector data.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Save(System.IO.Stream,Syn.Oryzer.LanguageProcessing.VectorDataFormat)">
+            <summary>
+            Saves the loaded or generated word vector representation to the specified file stream.
+            </summary>
+            <param name="stream">The file stream.</param>
+            <param name="format"></param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.LoadText(System.IO.Stream)">
+            <summary>
+            Loads word vector representations from text file stream.
+            </summary>
+            <param name="stream">The file stream.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Generate(System.String)">
+            <summary>
+            Generates a random vector for the word specified.
+            </summary>
+            <param name="word">The word.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.GetWordVector(System.String)">
+            <summary>
+            Gets the word vector if it exists.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Contains(System.String)">
+            <summary>
+            Gets a value indicating if a word vector for the specified word exists.
+            </summary>
+            <param name="word"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.GetNearest(Syn.Oryzer.LanguageProcessing.WordVector,System.Int32)">
+            <summary>
+            Gets specified number of closest words for target word vector.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.GetNearest(System.String,System.Int32)">
+            <summary>
+            if word exists - returns "count" of best fits for target word
+            otherwise - returns empty array
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Analogy(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            If firstWord is secondWord, then thirdWord is...
+            If all words exist - returns "count" of best fits for the result
+            otherwise - returns empty array
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Analogy(Syn.Oryzer.LanguageProcessing.WordVector,Syn.Oryzer.LanguageProcessing.WordVector,Syn.Oryzer.LanguageProcessing.WordVector,System.Int32)">
+            <summary>
+            If firstWord is secondWord, then thirdWord is...
+            Returns "count" of best fits for the result
+            </summary>
+        </member>
+        <member name="E:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Loading">
+            <summary>
+            Occurs when vector data is being loaded.
+            </summary>
+        </member>
+        <member name="E:Syn.Oryzer.LanguageProcessing.VectorVocabulary.LoadProgress">
+            <summary>
+            Occurs when vector data load progress is submitted.
+            </summary>
+        </member>
+        <member name="E:Syn.Oryzer.LanguageProcessing.VectorVocabulary.Loaded">
+            <summary>
+            Occurs when vector data load has completed.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.LexicographerFileName">
+            <summary>
+            Lexicographer file names
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech">
+            <summary>
+            WordNet parts-of-speech
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SemanticSimilarity.GetSimilarity(System.String,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,System.String,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,Syn.Oryzer.LanguageProcessing.WordNet.Strategy,Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation[])">
+            <summary>
+            Gets similarity of two strings using the most common synset for given string/pos pairs
+            </summary>
+            <param name="firstWord">First string</param>
+            <param name="firstWordPos">First POS</param>
+            <param name="secondWordPos">Second POS</param>
+            <param name="secondWord">Second string</param>
+            <param name="strategy">Similarity strategy to use</param>
+            <param name="relations">Relations to use when computing similarity</param>
+            <returns>Similarity</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SemanticSimilarity.GetSimilarity(Syn.Oryzer.LanguageProcessing.WordNet.SynSet,Syn.Oryzer.LanguageProcessing.WordNet.SynSet,Syn.Oryzer.LanguageProcessing.WordNet.Strategy,Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation[])">
+            <summary>
+            Gets similarity of two synsets
+            </summary>
+            <param name="firstSynSet">First synset</param>
+            <param name="secondSynSet">Second synset</param>
+            <param name="strategy">Strategy to use. All strategies named WuPalmer1994* will produce the same result since only two synsets
+            are available.</param>
+            <param name="relations">Synset relations to follow when computing similarity (pass null for all relations)</param>
+            <returns>Similarity</returns>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.Strategy">
+            <summary>
+            Similarity strategies
+            </summary>
+        </member>
+        <member name="F:Syn.Oryzer.LanguageProcessing.WordNet.Strategy.WuPalmer1994MostCommon">
+            <summary>
+            Follow the method described by Wu and Palmer (1994):  2 * depth(lcs) / (depth(s1) + depth(s2)). When multiple
+            synsets are available, the most common sense are used.
+            </summary>
+        </member>
+        <member name="F:Syn.Oryzer.LanguageProcessing.WordNet.Strategy.WuPalmer1994Minimum">
+            <summary>
+            Follow the method described by Wu and Palmer (1994):  2 * depth(lcs) / (depth(s1) + depth(s2)). When multiple
+            synsets are available, the ones resulting in minimum similarity are used.
+            </summary>
+        </member>
+        <member name="F:Syn.Oryzer.LanguageProcessing.WordNet.Strategy.WuPalmer1994Maximum">
+            <summary>
+            Follow the method described by Wu and Palmer (1994):  2 * depth(lcs) / (depth(s1) + depth(s2)). When multiple
+            synsets are available, the ones resulting in maximum similarity are used.
+            </summary>
+        </member>
+        <member name="F:Syn.Oryzer.LanguageProcessing.WordNet.Strategy.WuPalmer1994Average">
+            <summary>
+            Follow the method described by Wu and Palmer (1994):  2 * depth(lcs) / (depth(s1) + depth(s2)). When multiple
+            synsets are available, similarity is averaged across all synsets.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.SynSet">
+            <summary>
+            Represents a WordNet synset
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.op_Equality(Syn.Oryzer.LanguageProcessing.WordNet.SynSet,Syn.Oryzer.LanguageProcessing.WordNet.SynSet)">
+            <summary>
+            Checks whether two synsets are equal
+            </summary>
+            <param name="first">First synset</param>
+            <param name="second">Second synset</param>
+            <returns>True if synsets are equal, false otherwise</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.op_Inequality(Syn.Oryzer.LanguageProcessing.WordNet.SynSet,Syn.Oryzer.LanguageProcessing.WordNet.SynSet)">
+            <summary>
+            Checks whether two synsets are unequal
+            </summary>
+            <param name="first">First synset</param>
+            <param name="second">Second synset</param>
+            <returns>True if synsets are unequal, false otherwise</returns>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.SemanticRelations">
+            <summary>
+            Gets semantic relations that exist between this synset and other synsets
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.LexicalRelations">
+            <summary>
+            Gets lexical relations that exist between words in this synset and words in another synset
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.LexicographerFileName">
+            <summary>
+            Gets the lexicographer file name for this synset (see the lexnames file in the WordNet distribution).
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Instantiated">
+            <summary>
+            Gets whether or not the current synset has been instantiated
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.SearchBackPointer">
+            <summary>
+            Gets or sets the back-pointer used when searching WordNet
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.PartOfSpeech">
+            <summary>
+            Gets the POS of the current synset
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Offset">
+            <summary>
+            Gets the byte offset of synset definition within the data file
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Gloss">
+            <summary>
+            Gets the gloss of the current SynSet
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Words">
+            <summary>
+            Gets the words in the current SynSet
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Id">
+            <summary>
+            Gets the ID of this synset in the form POS:Offset
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.#ctor(Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,System.Int32,Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine)">
+            <summary>
+            Constructor. Creates the shell of a SynSet without any actual information. To gain access to SynSet words, gloss, 
+            and related SynSets, call SynSet.Instantiate.
+            </summary>
+            <param name="partOfSpeech">POS of SynSet</param>
+            <param name="offset">Byte location of SynSet definition within data file</param>
+            <param name="engine">WordNet engine used to instantiate this synset. This should be non-null only when constructing
+            synsets for disk-based WordNet engines.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Instantiate">
+            <summary>
+            Instantiates the current synset. Any related synsets are created as synset shells. These shells only contain
+            the POS and offset. Other members can be initialized by calling Instantiate on the shells. This should only 
+            be called when _not_ using in-memory storage. When using in-memory storage, all synsets are instantiated in
+            the WordNetEngine constructor. 
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Instantiate(System.String,System.Collections.Generic.Dictionary{System.String,Syn.Oryzer.LanguageProcessing.WordNet.SynSet})">
+            <summary>
+            Instantiates the current synset. If idSynset is non-null, related synsets references are set to those from 
+            idSynset; otherwise, related synsets are created as shells.
+            </summary>
+            <param name="definition">Definition line of synset from data file</param>
+            <param name="idSynset">Lookup for related synsets. If null, all related synsets will be created as shells.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetField(System.String,System.Int32)">
+            <summary>
+            Gets a space-delimited field from a synset definition line
+            </summary>
+            <param name="line">SynSet definition line</param>
+            <param name="fieldNum">Number of field to get</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetField(System.String,System.Int32,System.Int32@)">
+            <summary>
+            Gets a space-delimited field from a synset definition line
+            </summary>
+            <param name="line">SynSet definition line</param>
+            <param name="fieldNum">Number of field to get</param>
+            <param name="startIndex">Start index of field within the line</param>
+            <returns>Field value</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetPartOfSpeech(System.String)">
+            <summary>
+            Gets the POS from its code
+            </summary>
+            <param name="pos">POS code</param>
+            <returns>POS</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetRelatedSynSetCount(Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation)">
+            <summary>
+            Gets the number of synsets related to the current one by the given relation
+            </summary>
+            <param name="relation">Relation to check</param>
+            <returns>Number of synset related to the current one by the given relation</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetRelatedSynSets(Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation,System.Boolean)">
+            <summary>
+            Gets synsets related to the current synset
+            </summary>
+            <param name="relation">Synset relation to follow</param>
+            <param name="recursive">Whether or not to follow the relation recursively for all related synsets</param>
+            <returns>Synsets related to the given one by the given relation</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetRelatedSynSets(System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation},System.Boolean)">
+            <summary>
+            Gets synsets related to the current synset
+            </summary>
+            <param name="relations">Synset relations to follow</param>
+            <param name="recursive">Whether or not to follow the relations recursively for all related synsets</param>
+            <returns>Synsets related to the given one by the given relations</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetRelatedSynSets(System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation},System.Boolean,System.Collections.Generic.List{Syn.Oryzer.LanguageProcessing.WordNet.SynSet})">
+            <summary>
+            Private version of GetRelatedSynSets that avoids cyclic paths in WordNet. The current synset must itself be instantiated.
+            </summary>
+            <param name="relations">Synset relations to get</param>
+            <param name="recursive">Whether or not to follow the relation recursively for all related synsets</param>
+            <param name="currSynSets">Current collection of synsets, which we'll add to.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetShortestPathTo(Syn.Oryzer.LanguageProcessing.WordNet.SynSet,System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation})">
+            <summary>
+            Gets the shortest path from the current synset to another, following the given synset relations.
+            </summary>
+            <param name="destination">Destination synset</param>
+            <param name="relations">Relations to follow, or null for all relations.</param>
+            <returns>Synset path, or null if none exists.</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetClosestMutuallyReachableSynset(Syn.Oryzer.LanguageProcessing.WordNet.SynSet,System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation})">
+            <summary>
+            Gets the closest synset that is reachable from the current and another synset along the given relations. For example, 
+            given two synsets and the Hypernym relation, this will return the lowest synset that is a hypernym of both synsets. If 
+            the hypernym hierarchy forms a tree, this will be the lowest common ancestor.
+            </summary>
+            <param name="synset">Other synset</param>
+            <param name="relations">Relations to follow</param>
+            <returns>Closest mutually reachable synset</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetDepth(System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation})">
+            <summary>
+            Computes the depth of the current synset following a set of relations. Returns the minimum of all possible depths. Root nodes
+            have a depth of zero.
+            </summary>
+            <param name="relations">Relations to follow</param>
+            <returns>Depth of current SynSet</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetDepth(System.Collections.Generic.IEnumerable{Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation},System.Collections.Generic.List{Syn.Oryzer.LanguageProcessing.WordNet.SynSet}@)">
+            <summary>
+            Computes the depth of the current synset following a set of relations. Returns the minimum of all possible depths. Root
+            nodes have a depth of zero.
+            </summary>
+            <param name="relations">Relations to follow</param>
+            <param name="synsetsEncountered">Synsets that have already been encountered. Prevents cycles from being entered.</param>
+            <returns>Depth of current SynSet</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetLexicallyRelatedWords">
+            <summary>
+            Gets lexically related words for the current synset. Many of the relations in WordNet are lexical instead of semantic. Whereas
+            the latter indicate relations between entire synsets (e.g., hypernym), the former indicate relations between specific 
+            words in synsets. This method retrieves all lexical relations and the words related thereby.
+            </summary>
+            <returns>Mapping from relations to mappings from words in the current synset to related words in the related synsets</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.GetHashCode">
+            <summary>
+            Gets hash code for this synset
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.Equals(System.Object)">
+            <summary>
+            Checks whether the current synset equals another
+            </summary>
+            <param name="obj">Other synset</param>
+            <returns>True if equal, false otherwise</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.ToString">
+            <summary>
+            Gets description of synset
+            </summary>
+            <returns>Description</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.IsMostCommonSynsetFor(System.String)">
+            <summary>
+            Checks whether this is the most common synset for a word
+            </summary>
+            <param name="word">Word to check</param>
+            <returns>True if this is the most common synset, false otherwise</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.SynSet.SetAsMostCommonSynsetFor(System.String)">
+            <summary>
+            Set the current synset as the most common for a word
+            </summary>
+            <param name="word">Word to set</param>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.SynSetRelation">
+            <summary>
+            SynSet relations
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine">
+            <summary>
+            Represents a WordNET engine.
+            </summary>
+        </member>
+        <member name="F:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine._posSymbolRelation">
+            <summary>
+            SynSet relation symbols that are available for each POS
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.LoadFromDirectory(System.String)">
+            <summary>
+            Loads all WordNET lexical database files from directory.
+            </summary>
+            <param name="directory">Directory containing WordNET lexical database files.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.Load">
+            <summary>
+            Loads all added WordNET lexical database files.
+            </summary>
+            <remarks>This method must be called after <see cref="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.AddDataSource(System.IO.StreamReader,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech)"/> and <see cref="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.AddIndexSource(System.IO.StreamReader,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech)"/> are used.</remarks>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.IsLoaded">
+            <summary>
+            Gets a value indicating if WordNET lexical database has been loaded.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetSynSetRelation(Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,System.String)">
+            <summary>
+            Gets the relation for a given POS and symbol
+            </summary>
+            <param name="pos">POS to get relation for</param>
+            <param name="symbol">Symbol to get relation for</param>
+            <returns>SynSet relation</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetSynSetShells(System.String,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,Syn.Oryzer.LanguageProcessing.WordNet.SynSet@,Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine)">
+            <summary>
+            Gets synset shells from a word index line. A synset shell is an instance of SynSet with only the POS and Offset
+            members initialized. These members are enough to look up the full synset within the corresponding data file. This
+            method is static to prevent inadvertent references to a current WordNetEngine, which should be passed via the 
+            corresponding parameter.
+            </summary>
+            <param name="wordIndexLine">Word index line from which to get synset shells</param>
+            <param name="pos">POS of the given index line</param>
+            <param name="mostCommonSynSet">Returns the most common synset for the word</param>
+            <param name="wordNetEngine">WordNetEngine to pass to the constructor of each synset shell</param>
+            <returns>Synset shells for the given index line</returns>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.AllWords">
+            <summary>
+            Gets all words in WordNet, organized by POS.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetSynSetById(System.String)">
+            <summary>
+            Gets a synset
+            </summary>
+            <param name="synsetId">ID of synset in the format returned by SynSet.ID (i.e., POS:Offset)</param>
+            <returns>SynSet</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetSynSets(System.String,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech[])">
+            <summary>
+            Gets all synsets for a word, optionally restricting the returned synsets to one or more parts of speech. This
+            method does not perform any morphological analysis to match up the given word. It does, however, replace all 
+            spaces with underscores and call String.ToLower to normalize case.
+            </summary>
+            <param name="word">Word to get SynSets for. This method will replace all spaces with underscores and
+            call ToLower() to normalize the word's case.</param>
+            <param name="posRestriction">POSs to search. Cannot contain POS.None. Will search all POSs if no restriction
+            is given.</param>
+            <returns>Set of SynSets that contain word</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetMostCommonSynSet(System.String,Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech)">
+            <summary>
+            Gets the most common synset for a given word/pos pair. This is only available for memory-based
+            engines (see constructor).
+            </summary>
+            <param name="word">Word to get SynSets for. This method will replace all spaces with underscores and
+            will call String.ToLower to normalize case.</param>
+            <param name="pos">Part of speech to find</param>
+            <returns>Most common synset for given word/pos pair</returns>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordNet.WordNetEngine.GetSynSetDefinition(Syn.Oryzer.LanguageProcessing.WordNet.PartOfSpeech,System.Int32)">
+            <summary>
+            Gets definition line for synset from data file
+            </summary>
+            <param name="pos">POS to get definition for</param>
+            <param name="offset">Offset into data file</param>
+        </member>
+        <member name="T:Syn.Oryzer.LanguageProcessing.WordVector">
+            <summary>
+            Represents a Word Vector.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordVector.#ctor(System.String,System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.LanguageProcessing.WordVector"/> class.
+            </summary>
+            <param name="word">The word.</param>
+            <param name="data">The vector.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordVector.#ctor(System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.LanguageProcessing.WordVector"/> class.
+            </summary>
+            <param name="vector">The vector.</param>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordVector.Word">
+            <summary>
+            Gets the word.
+            </summary>
+            <value>
+            The word.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.LanguageProcessing.WordVector.Data">
+            <summary>
+            Gets the vector.
+            </summary>
+            <value>
+            The vector.
+            </value>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordVector.GetCosineSimilarity(Syn.Oryzer.LanguageProcessing.WordVector)">
+            <summary>
+            Gets the cosine distance to.
+            </summary>
+            <param name="wordVector">The word vector.</param>
+        </member>
+        <member name="M:Syn.Oryzer.LanguageProcessing.WordVector.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency">
+            <summary>
+            A class that describes an emotion or a related state according to an emotion action tendency vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.ActionTendency.ActionTendencyFrijda">
+            <summary>
+            Gets Frijda's action tendencies vocabulary URI
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.ActionTendency.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/>
+            </summary>
+            <param name="name">The name of the action tendency.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.ActionTendency.#ctor(System.String,System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> class.
+            </summary>
+            <param name="name">The name of the action tendency.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.ActionTendency.#ctor(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> class.
+            </summary>
+            <param name="name">The name of the action tendency.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+            <param name="confidence">The annotator's confidence that the annotation given for this action tendency is correct.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal">
+            <summary>
+            A class that describes an emotion or a related state according to an emotion appraisal vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Appraisal.AppraisalEma">
+            <summary>
+            Gets the EMA appraisals vocabulary URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Appraisal.AppraisalOcc">
+            <summary>
+            Gets the OCC appraisals vocabulary URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Appraisal.AppraisalScherer">
+            <summary>
+            Gets the Scherer's appraisals vocabulary URI
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Appraisal.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> class.
+            </summary>
+            <param name="name">The name of the appraisal, which must be contained in the declared appraisal vocabulary.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Appraisal.#ctor(System.String,System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> class.
+            </summary>
+            <param name="name">The name of the appraisal, which must be contained in the declared appraisal vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Appraisal.#ctor(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> class.
+            </summary>
+            <param name="name">The name of the appraisal, which must be contained in the declared appraisal vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+            <param name="confidence">The degree of confidence or probability that the emotion representation carrying this attribute is correct.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Category">
+            <summary>
+            A class that describes an emotion or a related state using a category.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Category.CategoryBig6">
+            <summary>
+            Gets the Ekman's "big six" basic emotions vocabulary URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Category.CategoryEveryday">
+            <summary>
+            Gets the Everyday emotion vocabulary URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Category.CategoryOcc">
+            <summary>
+            Gets the OCC categories vocabulary URI 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Category.CategoryFsre">
+            <summary>
+            Gets the FSRE categories vocabulary URI 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Category.CategoryFrijda">
+            <summary>
+            Gets the Frijda's categories vocabulary URI
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Category.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/> class.
+            </summary>
+            <param name="name">The name of the category, which must be contained in the declared category vocabulary.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Category.#ctor(System.String,System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/> class.
+            </summary>
+            <param name="name">The name of the category, which must be contained in the declared category vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Category.#ctor(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/> class.
+            </summary>
+            <param name="name">The name of the category, which must be contained in the declared category vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+            <param name="confidence">The degree of confidence or probability that the emotion representation carrying this attribute is correct.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Dimension">
+            <summary>
+            A class that describes an emotion or a related state according to an emotion dimension vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Dimension.DimensionPad">
+            <summary>
+            Gets the Mehrabian's PAD dimensions URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Dimension.DimensionFsre">
+            <summary>
+            Gets the FSRE dimensions URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Dimension.DimensionIntensity">
+            <summary>
+            Gets the intensity dimension URI
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Dimension.Value">
+            <summary>
+            Gets or sets a static scale value which must be a floating point value from the closed interval [0, 1].
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Dimension.Trace">
+            <summary>
+            Gets or sets a value that represents the time evolution of a dynamic scale value.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Dimension.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> class.
+            </summary>
+            <param name="name">The name of the dimension, which must be contained in the declared dimension vocabulary.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Dimension.#ctor(System.String,System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> class.
+            </summary>
+            <param name="name">The name of the dimension, which must be contained in the declared dimension vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Dimension.#ctor(System.String,System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> class.
+            </summary>
+            <param name="name">The name of the dimension, which must be contained in the declared dimension vocabulary.</param>
+            <param name="value">The static scale value which must be a floating point value from the closed interval [0, 1].</param>
+            <param name="confidence">The degree of confidence or probability that the emotion representation carrying this attribute is correct.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Emotion">
+            <summary>
+            A class that represents a single emotion annotation.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughFace">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through face.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughGaze">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through gaze.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughGesture">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through gesture.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughHead">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through head.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughLeg">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through leg.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughLocomotion">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through locomotion.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughText">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through text.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughPhysiology">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through physiology.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughPosture">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through posture.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughTorso">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through torso.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughVoice">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through voice.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughCamera">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through camera.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughFacialSkinColor">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through facial skin color.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThroughMicrophone">
+            <summary>
+            Gets the modality which denotes that the emotion is expressed through microphone.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> class.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Info">
+            <summary>
+            Gets or sets the <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Info"/> used to annotate arbitrary metadata..
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Categories">
+            <summary>
+            Gets or sets the categories used to describe this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> or a related state using a category.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Dimensions">
+            <summary>
+            Gets or sets the dimensions that describe this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> or a related state according to an emotion dimension vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Appraisals">
+            <summary>
+            Gets or sets the appraisals that describe this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> or a related state according to an emotion appraisal vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ActionTendencies">
+            <summary>
+            Gets or sets the action tendencies that describe this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> or a related state according to an emotion action tendency vocabulary.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ID">
+            <summary>
+            Gets or sets the unique identifier for the emotion
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Version">
+            <summary>
+            Gets or sets the version which indicates the version of the specification to be used for the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> and its descendants.
+            </summary>
+            <value>
+            The specification version.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.References">
+            <summary>
+            Gets a list of references that relate this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> annotation to the "rest of the world".
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.ExpressedThrough">
+            <summary>
+            Gets or sets the modality, or list of modalities, through which the emotion is expressed. 
+            An attribute of type xsd:NMTOKENS which contains a space delimited set of values from an open set of values including: {gaze, face, head, torso, gesture, leg, voice, text, locomotion, posture, physiology, ...}.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Start">
+            <summary>
+            Gets or sets a value which denotes the starting and ending absolute times. 
+            The value must be of type xsd:nonNegativeInteger and should indicate the number of milliseconds since 1 January 1970 00:00:00 GMT.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.End">
+            <summary>
+            Gets or sets a value which denotes the starting and ending absolute times. 
+            The value must be of type xsd:nonNegativeInteger and should indicate the number of milliseconds since 1 January 1970 00:00:00 GMT.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.Duration">
+            <summary>
+            Gets or sets a value defaulting to zero which specifies the duration of the event in milliseconds.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.TimeRefUri">
+            <summary>
+            Gets or sets a value which indicates the URI used to anchor the relative timestamp.
+            </summary>
+            <value>
+            The time reference URI.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.TimeRefAnchorPoint">
+            <summary>
+            Gets or sets a value which indicates whether to measure the time from the start or end of the interval designated with <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.TimeRefUri"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.OffsetToStart">
+            <summary>
+            Gets or sets the offset in milliseconds for the start of input from the anchor point designated with <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.TimeRefUri"/> and <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.TimeRefAnchorPoint"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Emotion.PlainText">
+            <summary>
+            Gets or sets an arbitrary text value.
+            </summary>
+            <value>
+            The plain text.
+            </value>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.AddCategory(Syn.Oryzer.Sentiment.EmotionML.Category)">
+            <summary>
+            Adds a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/> to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/>.
+            </summary>
+            <param name="newCategory">The category to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.RemoveCategory(System.String)">
+            <summary>
+            Removes a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/> by name.
+            </summary>
+            <param name="categoryName">The name of the category to remove</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.AddDimension(Syn.Oryzer.Sentiment.EmotionML.Dimension)">
+            <summary>
+            Adds a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/>.
+            </summary>
+            <param name="newDimension">The <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.RemoveDimension(System.String)">
+            <summary>
+            Removes a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/> by name.
+            </summary>
+            <param name="dimensionName">The name of the dimension to remove</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.AddAppraisal(Syn.Oryzer.Sentiment.EmotionML.Appraisal)">
+            <summary>
+            Adds an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/>.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.RemoveAppraisal(System.String)">
+            <summary>
+            Removes an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> by name.
+            </summary>
+            <param name="appraisalName">The name of the appraisal to remove.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.AddActionTendency(Syn.Oryzer.Sentiment.EmotionML.ActionTendency)">
+            <summary>
+            Adds an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/>.
+            </summary>
+            <param name="newActionTendency">The <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.RemoveActionTendency(System.String)">
+            <summary>
+            Removes an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> by name
+            </summary>
+            <param name="actionTendencyName">The name of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/> to remove.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.AddReference(Syn.Oryzer.Sentiment.EmotionML.Reference)">
+            <summary>
+            Adds a reference URI to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> annotation.
+            </summary>
+            <param name="newReference">The reference URI to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.RemoveReference(Syn.Oryzer.Sentiment.EmotionML.Reference)">
+            <summary>
+            Removes a reference by its value.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.MergeWith(Syn.Oryzer.Sentiment.EmotionML.Emotion)">
+            <summary>
+            Merges this emotion with the specified emotion annnotation.
+            </summary>
+            <param name="mergingEmotion">The <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> to merge with.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.GetElement">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XElement"/> that represents this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/>.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Emotion.Parse(Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument,System.Xml.Linq.XElement)">
+            <summary>
+            Loads an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument">
+            <summary>
+            A class that represents the root element of an EmotionML document.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/> class.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Info">
+            <summary>
+            Gets or sets the <see cref="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Info"/> element used to annotate arbitrary metadata..
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Vocabularies">
+            <summary>
+            Gets or sets list of  vocabularies that contain the definition of individual <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> vocabulary.
+            </summary>
+            <value>
+            The vocabularies.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Emotions">
+            <summary>
+            Gets or sets the list of all the emotions that represents a individual emotion annotation.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.CategorySet">
+            <summary>
+            category set for categories
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.DimensionSet">
+            <summary>
+            dimension set for dimensions
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.AppraisalSet">
+            <summary>
+            Gets or sets the appraisal set.
+            </summary>
+            <value>
+            The appraisal set.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.ActionTendencySet">
+            <summary>
+            Gets or sets the action tendency set for action tendencies
+            </summary>
+            <value>
+            The action tendency set.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Version">
+            <summary>
+            Gets the version of EmotionML specification.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.PlainText">
+            <summary>
+            Gets or sets an arbitrary plain text value.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.GetEmotionById(System.String)">
+            <summary>
+            Gets an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> by identifier.
+            </summary>
+            <param name="id">The emotion identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.ContainsEmotion(System.String)">
+            <summary>
+            Determines whether an emotion with the specified ID exists.
+            </summary>
+            <param name="id">The emotion identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.AddVocabulary(Syn.Oryzer.Sentiment.EmotionML.Vocabulary)">
+            <summary>
+            Adds a vocabulary to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/>.
+            </summary>
+            <param name="vocabulary">The Vocabulary to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.AddEmotion(Syn.Oryzer.Sentiment.EmotionML.Emotion)">
+            <summary>
+            Adds an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/>.
+            </summary>
+            <param name="emotion">The Emotion to add.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.GetDocument">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XDocument"/> that represents this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/> object.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Parse(System.Xml.Linq.XDocument)">
+            <summary>
+            Loads an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/> from the specified <see cref="T:System.Xml.Linq.XDocument"/>.
+            </summary>
+            <param name="emotionMLDocument">The EmotionML document.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument.Parse(System.String)">
+            <summary>
+            Loads an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLDocument"/> by parsing the specified <see cref="T:System.String"/>.
+            </summary>
+            <param name="emotionML">The EmotionML document string.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException">
+            <summary>
+            Represents errors that occur when an EmotionML element is parsed.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException"/> class.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification">
+            <summary>
+            A class that holds static EmotionML constants.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.KnownTags">
+            <summary>
+            Gets a list of all the known EmotionML tags.
+            </summary>
+            <value>
+            The known tags.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.Namespace">
+            <summary>
+            Gets the namespace for EmotionML 1.0 specification.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.Prefix">
+            <summary>
+            Gets the recommented XML-prefix of EmotionML
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.MimeType">
+            <summary>
+            Gets the MIME type of EmotionML
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.FileExtension">
+            <summary>
+            Gets the File-extension of EmotionML
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.Version">
+            <summary>
+            Gets the version of highest EmotionML-Recommendation
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionMLSpecification.Versions">
+            <summary>
+            Gets all known EmotionML versions.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.EmotionRelatedState">
+            <summary>
+            An abstract class for the broad range of phenomena intended to be covered by EmotionML specification.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionRelatedState.Name">
+            <summary>
+            Gets or sets a value which describes and or defines an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> or an emotion related state.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionRelatedState.Value">
+            <summary>
+            Gets or sets a value which represents a static scale value of the enclosing element.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionRelatedState.Confidence">
+            <summary>
+            Gets or sets a value which indicates the degree of confidence or probability that the emotion representation carrying this attribute is correct. 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.EmotionRelatedState.Trace">
+            <summary>
+            Gets or sets the Trace value which represents the time evolution of a dynamic scale value.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Info">
+            <summary>
+            A class used to annotate arbitrary metadata.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Info.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Info"/> class.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Info.Element">
+            <summary>
+            Gets or sets the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Info"/> element node.
+            </summary>
+            <value>
+            The <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Info"/> element node.
+            </value>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Info.ID">
+            <summary>
+            Gets or sets the unique identifier for this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Info"/> element.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Info.Parse(System.Xml.Linq.XElement)">
+            <summary>
+            Loads an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Info"/> from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Item">
+            <summary>
+            Represents the definition of one vocabulary item, associated with a value which can be used in the "name" attribute of <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/>, <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/>, <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> or <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/>. 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Item.Name">
+            <summary>
+            Gets or sets the name for the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/>, used to refer to this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Item.Info">
+            <summary>
+            Gets or sets the <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Item.Info"/> element used to annotate arbitrary metadata..
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Item.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/> class.
+            </summary>
+            <param name="name">The name of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/>.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Item.GetElement">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XElement"/> that represents this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/>.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Item.Parse(System.Xml.Linq.XElement)">
+            <summary>
+            Loads an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/> from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Reference">
+            <summary>
+            Reference used to relate the emotion annotation to the "rest of the world", more specifically to the emotional expression, the experiencing subject, the trigger, and the target of the emotion.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.ExpressedBy">
+            <summary>
+            Gets a value that indicates that the reference points to observable behavior expressing the emotion.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.ExperiencedBy">
+            <summary>
+            Gets a value that indicates that the reference points to the subject experiencing the emotion.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.TriggeredBy">
+            <summary>
+            Gets a value that indicates that the reference points to an emotion-eliciting event that caused an emotion and/or related appraisals.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.TargetedAt">
+            <summary>
+            Gets a value that indicates that the reference points to an object towards which an emotion-related action, or action tendency, is directed.
+            </summary>
+            <value>
+            The targeted by.
+            </value>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Reference.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Reference"/> class.
+            </summary>
+            <param name="uri">The URI identifying the actual reference target.</param>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.Uri">
+            <summary>
+            Gets or sets the URI identifying the actual reference target.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.Role">
+            <summary>
+            Gets or sets the type of relation between the emotion and the external item referred to. The value must be one of <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Reference.ExpressedBy"/> (default), <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Reference.ExperiencedBy"/>, <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Reference.TriggeredBy"/>, <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Reference.TargetedAt"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Reference.MediaType">
+            <summary>
+            Gets or sets a value of type xsd:string holding the MIME type of the data that the <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Reference.Uri"/> attribute points to.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Reference.GetElement">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XElement"/> that represent this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Reference"/>.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Reference.Parse(System.Xml.Linq.XElement)">
+            <summary>
+            Loads a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Reference"/> from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Trace">
+            <summary>
+            Represents the time evolution of a dynamic scale value.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.#ctor(System.Double,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Trace"/> class.
+            </summary>
+            <param name="frequency">The frequency.</param>
+            <param name="samples">The samples.</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Trace"/> class.
+            </summary>
+            <param name="frequencyString">The frequency as string.</param>
+            <param name="samples">The samples.</param>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Trace.Frequency">
+            <summary>
+            Gets or sets the frequency.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Trace.Samples">
+            <summary>
+            Gets or sets the samples.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.SetFrequency(System.String)">
+            <summary>
+            Set frequency by frequency-string (within Hz)
+            </summary>
+            <param name="frequencyValue">frequency string</param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.FrequencyText">
+            <summary>
+            Gets the frequency as string with Hz
+            </summary>
+            <returns>Frequency string (with Hz)</returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.GetElement">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XElement"/> that represents this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Trace"/> object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Trace.Parse(System.Xml.Linq.XElement)">
+            <summary>
+            Loads a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Trace"/> object from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="element">The trace element.</param>
+        </member>
+        <member name="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary">
+            <summary>
+            Encapsulates the definition of an <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Emotion"/> vocabulary.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.#ctor(System.String,System.String,Syn.Oryzer.Sentiment.EmotionML.Item)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="id">The identifier.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.ID">
+            <summary>
+            Gets or sets a unique vocabulary identifier of type xsd:ID. 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.Type">
+            <summary>
+            Gets or sets a value that explicitly indicates whether the vocabulary represents category names, dimension elements, appraisal elements or action tendency elements. 
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.Info">
+            <summary>
+            Gets or sets the <see cref="P:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.Info"/> element that provides an arbitrary metadata about this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary"/>.
+            </summary>
+        </member>
+        <member name="P:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.Items">
+            <summary>
+            Gets the list of <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Item"/> elements that represent the definition of this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary"/> item, associated with a value which can be used in the "name" attribute of <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Category"/>, <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Dimension"/>, <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Appraisal"/> or <see cref="T:Syn.Oryzer.Sentiment.EmotionML.ActionTendency"/>.
+            </summary>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.AddItem(Syn.Oryzer.Sentiment.EmotionML.Item)">
+            <summary>
+            Adds an item to this vocabulary.
+            </summary>
+            <param name="newItem"></param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.RemoveItem(Syn.Oryzer.Sentiment.EmotionML.Item)">
+            <summary>
+            Removes item from this vocabulary.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.GetElement">
+            <summary>
+            Gets an <see cref="T:System.Xml.Linq.XElement"/> that represents this <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary"/> object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syn.Oryzer.Sentiment.EmotionML.Vocabulary.Parse(System.Xml.Linq.XElement)">
+            <summary>
+            Loads a <see cref="T:Syn.Oryzer.Sentiment.EmotionML.Vocabulary"/> object from the specified <see cref="T:System.Xml.Linq.XElement"/>.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+    </members>
+</doc>

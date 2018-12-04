@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using TekMarket.Models;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -54,7 +55,7 @@
             </div>
 
             <header class="main-header">
-                <a href="@Url.Action("Home","Admin")" class="logo">
+                <a href="@Url.Action("Home", "Admin")" class="logo">
                     <!-- Logo -->
                     <span class="logo-mini">
                         <img src="@Url.Content("~/Content/adminAssets/assets/dist/img/mini-logo.png")" alt="">
@@ -370,7 +371,7 @@
                     <!-- sidebar menu -->
                     <ul class="sidebar-menu">
                         <li class="active">
-                            <a href="@Url.Action("Home","Admin")">
+                            <a href="@Url.Action("Home", "Admin")">
                                 <i class="fa fa-tachometer"></i><span>Dashboard</span>
                                 <span class="pull-right-container">
                                 </span>
@@ -384,9 +385,9 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li> @Html.ActionLink("Add Administrator","Create","Admins")</li>
+                                <li> @Html.ActionLink("Add Administrator", "Create", "Admins")</li>
                                 
-                                <li> @Html.ActionLink("Administrators","Index","Admins") </li>
+                                <li> @Html.ActionLink("Administrators", "Index", "Admins") </li>
 
                             </ul>
                         </li>
@@ -400,9 +401,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li>@Html.ActionLink("Add New Product", "Create", "Articles") </li>
-                                <li>@Html.ActionLink("Products","Index","Articles") </li>
-                                <li> @Html.ActionLink("Categories","Index","Categories")</li>
-                                <li> @Html.ActionLink("Add Category","Create","Categories") </li>
+                                <li>@Html.ActionLink("Products", "Index", "Articles") </li>
+                                <li> @Html.ActionLink("Categories", "Index", "Categories")</li>
+                                <li> @Html.ActionLink("Add Category", "Create", "Categories") </li>
                                 
 
                             </ul>
@@ -416,8 +417,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li> @Html.ActionLink("All Orders","Index","Commandes") </li>
-                                <li> @Html.ActionLink("Total Paiements","Index","Commandes")</li>
+                                <li> @Html.ActionLink("All Orders", "Index", "Commandes") </li>
+                                <li> @Html.ActionLink("Total Paiements", "Index", "Commandes")</li>
                             </ul>
                         </li>
                         <li class="treeview">

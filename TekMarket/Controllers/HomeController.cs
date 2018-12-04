@@ -8,11 +8,10 @@ using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using TekMarket.Models;
-using Syn.Bot;
-using Syn.Chat;
 using System.IO;
 using WebMatrix.WebData;
 using System.Dynamic;
+using TekMarket.CustomClasses;
 
 namespace TekMarket.Controllers
 {
@@ -250,30 +249,14 @@ namespace TekMarket.Controllers
         {
             try
             {
-
-                SynBot bot = new SynBot();
-                BotUser user = bot.CreateUser();
-
-                var pk = System.IO.File.ReadAllText(Server.MapPath("~/Content/Assistant/PackageChat.txt"));
-                bot.PackageManager.LoadFromString(pk);
-
-                var chatreq = new ChatRequest(ms, RequestType.UserMessage, user);
-                ChatResult res = bot.Chat(chatreq);
-                string response = res.BotMessage;
-
-                if (res.Success)
-                {
-                    return Content("<p>" + response + "</p><br>", "text/html");
-                }
-                else
-                {
-                    return Content("<p>unsuccessful</p><br>", "text/html");
-                }
-
+                Judi judi = new Judi();
+                String r = judi.answer(ms);
+                r = "<p>bot: </p>" + r;
+                return Content(r, "text/html");
             }
             catch (Exception ex)
             {
-                return Content("<p>" + ex.Message + "</p><br>", "text/html");
+                return Content("<p>bot exception: " + ex.Message + "</p><br>", "text/html");
             }
         }
 
